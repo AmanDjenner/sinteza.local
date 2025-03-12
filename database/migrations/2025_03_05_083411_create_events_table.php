@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
@@ -16,7 +13,6 @@ return new class extends Migration
             $table->date('data')->nullable();
             $table->foreignId('id_institution')->constrained('institutions')->onDelete('cascade');
             $table->foreignId('id_events_category')->constrained('events_category')->onDelete('cascade');
-            $table->foreignId('id_subcategory')->nullable()->constrained('events_subcategory')->onDelete('set null');
             $table->integer('persons_involved')->nullable();
             $table->text('events_text')->nullable();
             $table->timestamps();
@@ -24,9 +20,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('events');

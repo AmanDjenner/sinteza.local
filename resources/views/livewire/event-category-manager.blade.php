@@ -1,22 +1,6 @@
 <div>
     <h1 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Manager de categorii și subcategorii evenimente</h1>
 
-    <!-- Select pentru categorii și subcategorii -->
-    <div class="mb-4">
-        <label class="block mb-1 text-gray-900 dark:text-white">Selectează o categorie sau subcategorie</label>
-        <select wire:model="selectedCategory" 
-                class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400">
-            <option value="">Nimic selectat</option>
-            @foreach ($categories as $category)
-                <option value="cat-{{ $category->id }}">{{ $category->name }}</option>
-                @foreach ($category->subcategories as $subcategory)
-                    <option value="subcat-{{ $subcategory->id }}">↳ {{ $subcategory->name }}</option>
-                @endforeach
-            @endforeach
-        </select>
-        @error('selectedCategory') <span class="text-red-500">{{ $message }}</span> @enderror
-    </div>
-
     <!-- Butoane pentru creare -->
     <div class="mb-4">
         @can('create categories')
@@ -37,7 +21,6 @@
             <thead>
                 <tr>
                     <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Nume</th>
-                    <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Categorie părinte</th>
                     <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Acțiuni</th>
                 </tr>
             </thead>
@@ -45,7 +28,6 @@
                 @forelse ($categories as $category)
                     <tr>
                         <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">{{ $category->name }}</td>
-                        <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">-</td>
                         <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700">
                             @can('edit categories')
                                 <button wire:click="editCategory({{ $category->id }})" 
@@ -60,7 +42,6 @@
                     @foreach ($category->subcategories as $subcategory)
                         <tr>
                             <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white pl-8">↳ {{ $subcategory->name }}</td>
-                            <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">{{ $subcategory->category->name }}</td>
                             <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700">
                                 @can('edit categories')
                                     <button wire:click="editSubcategory({{ $subcategory->id }})" 
@@ -75,7 +56,7 @@
                     @endforeach
                 @empty
                     <tr>
-                        <td colspan="3" class="py-2 px-4 text-center text-gray-900 dark:text-white">Nicio categorie găsită.</td>
+                        <td colspan="2" class="py-2 px-4 text-center text-gray-900 dark:text-white">Nicio categorie găsită.</td>
                     </tr>
                 @endforelse
             </tbody>

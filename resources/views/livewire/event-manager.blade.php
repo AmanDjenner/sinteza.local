@@ -26,7 +26,7 @@
                     <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Data</th>
                     <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Instituție</th>
                     <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Categorie</th>
-                    <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Subcategorie</th>
+                    <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Subcategorii</th>
                     <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Persoane</th>
                     <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Detalii</th>
                     <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Acțiuni</th>
@@ -45,7 +45,7 @@
                             {{ $event->category->name ?? '-' }}
                         </td>
                         <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
-                            {{ $event->subcategory->name ?? '-' }}
+                            {{ $event->subcategories->isNotEmpty() ? $event->subcategories->pluck('name')->implode(', ') : '-' }}
                         </td>
                         <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">
                             {{ $event->persons_involved ?? '-' }}
@@ -97,20 +97,20 @@
                     </div>
                     <div class="mb-4">
                         <label class="block mb-1">Categorie</label>
-                        <select wire:model="id_events_category" 
+                        <select wire:model="id_events_category" wire:change="updateSubcategories" // Schimbat din id_category
                                 class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="">Selectează o categorie</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
-                        @error('id_events_category') <span class="text-red-500">{{ $message }}</span> @enderror
+                        @error('id_events_category') <span class="text-red-500">{{ $message }}</span> @enderror // Schimbat din id_category
                     </div>
                     <div class="mb-4">
-                        <label class="block mb-1">Subcategorie</label>
-                        <select wire:model="id_subcategory" 
-                                class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="">Niciuna</option>
+                        <label class="block mb-1">Subcategorii</label>
+                        <select wire:model="id_subcategory" multiple
+                                class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 h-32">
+                            <option value="" disabled>Selectează subcategorii</option>
                             @foreach ($subcategories as $subcategory)
                                 <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
                             @endforeach

@@ -10,13 +10,12 @@ class Event extends Model
         'data',
         'id_institution',
         'id_events_category',
-        'id_subcategory',
         'persons_involved',
         'events_text',
     ];
 
     protected $casts = [
-        'data' => 'date',
+        'data' => 'datetime',
     ];
 
     public function institution()
@@ -29,8 +28,8 @@ class Event extends Model
         return $this->belongsTo(EventCategory::class, 'id_events_category');
     }
 
-    public function subcategory()
+    public function subcategories()
     {
-        return $this->belongsTo(EventSubcategory::class, 'id_subcategory');
+        return $this->belongsToMany(EventSubcategory::class, 'event_subcategory', 'event_id', 'subcategory_id');
     }
 }

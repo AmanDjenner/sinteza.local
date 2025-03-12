@@ -14,6 +14,6 @@ class EventCategory extends Model
 
     public function subcategories()
     {
-        return $this->hasMany(EventSubcategory::class, 'id_category');
+        return $this->hasMany(EventSubcategory::class, 'id_events_category');
     }
 }
