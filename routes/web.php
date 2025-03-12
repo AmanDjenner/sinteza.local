@@ -3,9 +3,15 @@
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
-use Illuminate\Support\Facades\Route;
 use App\Livewire\RoleManager;
 use App\Livewire\AdminDashboard;
+use App\Livewire\EventManager; 
+use App\Livewire\InjuryManager; 
+use App\Livewire\DetinutiManager;
+use App\Livewire\DetinutiStatistics;
+
+
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,8 +27,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
-    Route::get('/admin/roles', RoleManager::class)->middleware('auth')->name('admin.roles');
-    Route::get('/admin/manager', AdminDashboard::class)->middleware('auth')->name('admin.manager');
+    Route::get('/admin/roles', RoleManager::class)->name('admin.roles');
+    Route::get('/admin/manager', AdminDashboard::class)->name('admin.manager');
+    
+    Route::get('/admin/events', EventManager::class)->name('admin.events');
+    Route::get('/admin/injuries', InjuryManager::class)->name('admin.injuries');
+    Route::get('/admin/detinuti', DetinutiManager::class)->name('admin.detinuti');
+    Route::get('/admin/detinuti-statistics', DetinutiStatistics::class)->name('admin.detinuti-statistics');
+    
+    
+
 });
 
 require __DIR__.'/auth.php';
