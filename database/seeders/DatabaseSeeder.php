@@ -51,6 +51,10 @@ Permission::create(['name' => 'create detinuti']);
 Permission::create(['name' => 'edit detinuti']);
 Permission::create(['name' => 'delete detinuti']);
 Permission::create(['name' => 'view detinuti']);
+Permission::create(['name' => 'create objects']);
+Permission::create(['name' => 'edit objects']);
+Permission::create(['name' => 'delete objects']);
+Permission::create(['name' => 'view objects']);
 
 
         // Asignare permisiuni rolului Admin
@@ -63,7 +67,8 @@ Permission::create(['name' => 'view detinuti']);
             'create injury-categories', 'edit injury-categories', 'delete injury-categories', 'view injury-categories',
             'create events', 'edit events', 'delete events', 'view events',
             'create injuries', 'edit injuries', 'delete injuries', 'view injuries',
-            'create detinuti', 'edit detinuti', 'delete detinuti', 'view detinuti'
+            'create detinuti', 'edit detinuti', 'delete detinuti', 'view detinuti',
+            'create objects', 'edit objects', 'delete objects', 'view objects',
         ]);
 
         // Asignare tuturor permisiunilor pentru Super Admin

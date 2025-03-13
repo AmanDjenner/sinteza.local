@@ -8,6 +8,8 @@ use App\Livewire\AdminDashboard;
 use App\Livewire\EventManager; 
 use App\Livewire\InjuryManager; 
 use App\Livewire\DetinutiManager;
+use App\Livewire\ObjectPrisonManager;
+// use App\Livewire\ObjectListManager;
 use App\Livewire\DetinutiStatistics;
 
 
@@ -34,9 +36,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/injuries', InjuryManager::class)->name('admin.injuries');
     Route::get('/admin/detinuti', DetinutiManager::class)->name('admin.detinuti');
     Route::get('/admin/detinuti-statistics', DetinutiStatistics::class)->name('admin.detinuti-statistics');
+    Route::get('/admin/objects', ObjectPrisonManager::class)->name('admin.objects');
+    // Route::get('/admin/object-list', ObjectListManager::class)->name('admin.object-list');
+   
+});
+
+
     
     
 
-});
+
 
 require __DIR__.'/auth.php';

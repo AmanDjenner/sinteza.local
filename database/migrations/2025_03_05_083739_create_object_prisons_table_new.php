@@ -6,28 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('objects_prison', function (Blueprint $table) {
+        Schema::create('object_prisons', function (Blueprint $table) {
             $table->id();
             $table->date('data');
             $table->foreignId('id_institution')->constrained('institutions')->onDelete('cascade');
             $table->string('eveniment', 255)->nullable();
-            $table->foreignId('id_obj_list')->nullable()->constrained('object_list')->onDelete('set null');
             $table->text('obj_text')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
-            $table->index('id_institution', 'idx_objects_id_institution');
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('objects');
+        Schema::dropIfExists('object_prisons');
     }
 };

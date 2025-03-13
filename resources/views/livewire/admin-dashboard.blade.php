@@ -49,6 +49,14 @@
                     Categorii Leziuni
                 </flux:button>
             </li>
+            <li class="me-2">
+                <flux:button wire:click="setTab('object-list')" 
+                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'object-list' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }} rounded-t-lg group"
+                             icon="cube"
+                             variant="ghost">
+                    Lista Obiecte interzise
+                </flux:button>
+            </li>
         </ul>
     </div>
 
@@ -66,6 +74,8 @@
             <livewire:event-category-manager />
         @elseif ($activeTab === 'injury-categories')
             <livewire:injury-category-manager />
+        @elseif ($activeTab === 'object-list')
+            <livewire:object-list-manager />
         @endif
     </div>
 </div>

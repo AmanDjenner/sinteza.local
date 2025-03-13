@@ -2,9 +2,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         @include('partials.head')
-        <style>
-            /* Eliminăm stilurile legate de Summernote, deoarece nu mai sunt necesare */
-        </style>
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
         <div class="flex min-h-screen">
@@ -19,18 +16,16 @@
                     </flux:navlist.group>
                     <flux:navlist.group heading="Administrare" class="grid">
                         <flux:navlist.item icon="calendar" :href="route('admin.manager')" :current="request()->routeIs('admin.manager')" wire:navigate>{{ __('Admin Manager') }}</flux:navlist.item>
-                        <!-- <flux:navlist.item icon="exclamation-circle" :href="route('admin.injuries')" :current="request()->routeIs('admin.injuries')" wire:navigate>{{ __('Leziuni') }}</flux:navlist.item> -->
+                        <flux:navlist.item icon="calendar" :href="route('admin.events')" :current="request()->routeIs('admin.events')" wire:navigate>{{ __('Evenimente') }}</flux:navlist.item>
+                        <flux:navlist.item icon="cube" :href="route('admin.objects')" :current="request()->routeIs('admin.objects')" wire:navigate>{{ __('Obiecte') }}</flux:navlist.item> 
+                        <flux:navlist.item icon="user-group" :href="route('admin.detinuti')" :current="request()->routeIs('admin.detinuti')" wire:navigate>{{ __('Deținuți') }}</flux:navlist.item>
+                        <flux:navlist.item icon="exclamation-circle" :href="route('admin.injuries')" :current="request()->routeIs('admin.injuries')" wire:navigate>{{ __('Leziuni') }}</flux:navlist.item>
+                        
                     </flux:navlist.group>
                     <flux:navlist.group heading="Utilizator" class="grid">
-                        <flux:navlist.item icon="calendar" :href="route('admin.events')" :current="request()->routeIs('admin.events')" wire:navigate>{{ __('Evenimente') }}</flux:navlist.item>
-                        <flux:navlist.item icon="exclamation-circle" :href="route('admin.injuries')" :current="request()->routeIs('admin.injuries')" wire:navigate>{{ __('Leziuni') }}</flux:navlist.item>
-
-                        <flux:navlist.item icon="chart-bar" :href="route('admin.detinuti-statistics')" :current="request()->routeIs('admin.detinuti-statistics')" wire:navigate>{{ __('Sinteza') }}</flux:navlist.item>
-   
-    <flux:navlist.item icon="user-group" :href="route('admin.detinuti')" :current="request()->routeIs('admin.detinuti')" wire:navigate>{{ __('Deținuți') }}</flux:navlist.item>
-   
+                       <flux:navlist.item icon="chart-bar" :href="route('admin.detinuti-statistics')" :current="request()->routeIs('admin.detinuti-statistics')" wire:navigate>{{ __('Sinteza 24 H') }}</flux:navlist.item>
+                        
                     </flux:navlist.group>
-                    
                 </flux:navlist>
                 <flux:spacer />
                 <flux:navlist variant="outline">

@@ -83,7 +83,7 @@ class EventCategoryManager extends Component
 
         EventSubcategory::create([
             'name' => $this->name,
-            'id_category' => $this->categoryId,
+            'id_events_category' => $this->categoryId,
         ]);
 
         $this->resetForm();
@@ -109,7 +109,7 @@ class EventCategoryManager extends Component
         $subcategory = EventSubcategory::findOrFail($this->editingSubcategoryId);
         $subcategory->update([
             'name' => $this->name,
-            'id_category' => $this->categoryId,
+            'id_events_category' => $this->categoryId,
         ]);
 
         $this->resetForm();
