@@ -1,20 +1,33 @@
 <div>
     <h1 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Manager Deținuți</h1>
 
-    <div class="mb-4">
+    <div class="mb-4 flex gap-4">
         @can('create detinuti')
             <button wire:click="$set('showModal', true)" 
                     class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
                 Adaugă înregistrare
             </button>
         @endcan
+        
+        <div>
+            <label class="block mb-1 text-gray-900 dark:text-white">Sortează după dată</label>
+            <input type="date" wire:model.live="sortDate" 
+                   class="border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+            @error('sortDate') <span class="text-red-500">{{ $message }}</span> @enderror
+        </div>
     </div>
+
+    @if (session()->has('error'))
+        <div class="mb-4 p-2 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <div class="overflow-x-auto">
         <table class="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-sm">
             <thead>
                 <tr>
-                    <th class="py-1 px-2 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">Data</th>
+                    <!-- <th class="py-1 px-2 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">Data</th> -->
                     <th class="py-1 px-2 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">Instituție</th>
                     <th class="py-1 px-2 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">Total</th>
                     <th class="py-1 px-2 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">Deținuți reali</th>
@@ -40,7 +53,7 @@
             <tbody>
                 @forelse ($detinuti as $detinut)
                     <tr>
-                        <td class="py-1 px-2 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">{{ $detinut->data ? $detinut->data->format('d-m-Y') : '-' }}</td>
+                        <!-- <td class="py-1 px-2 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">{{ $detinut->data ? $detinut->data->format('d-m-Y') : '-' }}</td> -->
                         <td class="py-1 px-2 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">{{ $detinut->institution->name ?? '-' }}</td>
                         <td class="py-1 px-2 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">{{ $detinut->total ?? '-' }}</td>
                         <td class="py-1 px-2 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">{{ $detinut->real_inmates ?? '-' }}</td>

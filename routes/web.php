@@ -37,7 +37,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/detinuti', DetinutiManager::class)->name('admin.detinuti');
     Route::get('/admin/detinuti-statistics', DetinutiStatistics::class)->name('admin.detinuti-statistics');
     Route::get('/admin/objects', ObjectPrisonManager::class)->name('admin.objects');
-    // Route::get('/admin/object-list', ObjectListManager::class)->name('admin.object-list');
+    
+    //User
+    Route::get('/user/events-24h', \App\Livewire\User\EventManager24H::class)->name('user.events-24h');
    
 });
 

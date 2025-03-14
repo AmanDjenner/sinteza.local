@@ -24,6 +24,7 @@
                     </flux:navlist.group>
                     <flux:navlist.group heading="Utilizator" class="grid">
                        <flux:navlist.item icon="chart-bar" :href="route('admin.detinuti-statistics')" :current="request()->routeIs('admin.detinuti-statistics')" wire:navigate>{{ __('Sinteza 24 H') }}</flux:navlist.item>
+                       <flux:navlist.item icon="chart-bar" :href="route('user.events-24h')" :current="request()->routeIs('user.events-24h')" wire:navigate>{{ __('Evenimente 24 H') }}</flux:navlist.item>
                         
                     </flux:navlist.group>
                 </flux:navlist>
