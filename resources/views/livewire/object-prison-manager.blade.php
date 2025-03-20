@@ -6,16 +6,16 @@
         <div>
             <label for="selected-date" class="block mb-1 text-gray-900 dark:text-white">Alege data:</label>
             <input type="date" id="selected-date" wire:model.live="selectedDate" 
-                   class="w-48 border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                   class="w-48 border border-gray-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-zinc-500">
         </div>
         <div class="flex space-x-2">
             @can('create objects')
                 <button wire:click="$set('showModal', true)" 
-                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                        class="bg-blue-500 hover:bg-zinc-600 text-white font-bold py-2 px-4 rounded">
                     Adaugă obiect
                 </button>
             @endcan
-            <button onclick="printTable()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button onclick="printTable()" class="bg-blue-500 hover:bg-zinc-700 text-white font-bold py-2 px-4 rounded">
                 Printează
             </button>
             <button onclick="downloadPDF()" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
@@ -25,30 +25,30 @@
     </div>
 
     <!-- Toast-uri -->
-    <div id="toast-success" class="hidden flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800" role="alert">
-        <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+    <div id="toast-success" class="hidden flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white  shadow-sm dark:text-gray-400 dark:bg-zinc-900" role="alert">
+        <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-green-500 bg-green-100  dark:bg-green-800 dark:text-green-200">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
             </svg>
             <span class="sr-only">Check icon</span>
         </div>
         <div id="toast-success-message" class="ms-3 text-sm font-normal"></div>
-        <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" onclick="hideToast('toast-success')" aria-label="Close">
+        <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900  focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-zinc-900 dark:hover:bg-zinc-700" onclick="hideToast('toast-success')" aria-label="Close">
             <span class="sr-only">Close</span>
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
             </svg>
         </button>
     </div>
-    <div id="toast-danger" class="hidden flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800" role="alert">
-        <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+    <div id="toast-danger" class="hidden flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white  shadow-sm dark:text-gray-400 dark:bg-zinc-900" role="alert">
+        <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-red-500 bg-red-100  dark:bg-red-800 dark:text-red-200">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
             </svg>
             <span class="sr-only">Error icon</span>
         </div>
         <div id="toast-danger-message" class="ms-3 text-sm font-normal"></div>
-        <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" onclick="hideToast('toast-danger')" aria-label="Close">
+        <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900  focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-zinc-900 dark:hover:bg-zinc-700" onclick="hideToast('toast-danger')" aria-label="Close">
             <span class="sr-only">Close</span>
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -61,27 +61,27 @@
             <h2 class="text-xl font-bold text-center mb-4 hidden print:block" id="print-title">
                 Lista obiecte pentru data de {{ Carbon\Carbon::parse($selectedDate)->format('d-m-Y') }}
             </h2>
-            <table class="w-full bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-sm">
+            <table class="w-full bg-gray-100 dark:bg-zinc-900 border border-gray-300 dark:border-zinc-700 text-sm">
                 <thead>
                     <tr>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">Nr.</th>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">Data</th>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">Instituție</th>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">Eveniment</th>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">Obiecte</th>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">Detalii</th>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">Adăugat la</th>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">Adăugat de</th>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">Actualizat la</th>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">Modificat de</th>
-                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">Acțiuni</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-center">Nr.</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-center">Data</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">Instituție</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">Eveniment</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">Obiecte</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">Detalii</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">Adăugat la</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">Adăugat de</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">Actualizat la</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">Modificat de</th>
+                        <th class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-center">Acțiuni</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($objects as $index => $object)
                         <tr>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">{{ $index + 1 }}</td>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-center">{{ $index + 1 }}</td>
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-center">
                                 @if ($object->data)
                                     <div>{{ Carbon\Carbon::parse($object->data)->format('d-m') }}</div>
                                     <div>{{ Carbon\Carbon::parse($object->data)->format('Y') }}</div>
@@ -89,13 +89,13 @@
                                     -
                                 @endif
                             </td>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">
                                 {{ $object->institution->name ?? '-' }}
                             </td>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">
                                 {{ $object->eveniment ?? '-' }}
                             </td>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">
                                 @if ($object->objectListItems && $object->objectListItems->isNotEmpty())
                                     <ul class="list-disc pl-5">
                                         @foreach ($object->objectListItems as $item)
@@ -106,22 +106,22 @@
                                     -
                                 @endif
                             </td>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">
                                 {!! $object->obj_text ?? '-' !!}
                             </td>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">
                                 {{ $object->created_at ? Carbon\Carbon::parse($object->created_at)->format('d-m-Y H:i') : '-' }}
                             </td>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">
                                 {{ $object->createdBy ? $object->createdBy->name : '-' }}
                             </td>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">
                                 {{ $object->updated_at ? Carbon\Carbon::parse($object->updated_at)->format('d-m-Y H:i') : '-' }}
                             </td>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-left">
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-left">
                                 {{ $object->updatedBy ? $object->updatedBy->name : '-' }}
                             </td>
-                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white text-center">
+                            <td class="w-fit py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white text-center">
                                 @can('edit objects')
                                     <button wire:click="editObject({{ $object->id }})" 
                                             class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded" style="margin-right: 3px;">Editează</button>
@@ -145,20 +145,20 @@
     <!-- Modal pentru creare/editare obiect -->
     @if ($showModal)
         <div id="modal-create" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center" wire:ignore.self>
-            <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg w-1/2 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700">
+            <div class="bg-gray-100 dark:bg-zinc-900 p-6  w-1/2 text-gray-900 dark:text-white border border-gray-300 dark:border-zinc-700">
                 <h2 class="text-xl mb-4">{{ $editingObjectId ? 'Editează obiect' : 'Crează obiect' }}</h2>
                 <form wire:submit.prevent="{{ $editingObjectId ? 'updateObject' : 'createObject' }}">
                 <div class="mb-4">
     <label class="block mb-1">Data</label>
     <input type="date" wire:model="data" 
            max="{{ \Carbon\Carbon::today()->format('Y-m-d') }}"
-           class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+           class="w-full border border-gray-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-zinc-500">
     @error('data') <span class="text-red-500">{{ $message }}</span> @enderror
 </div>
                     <div class="mb-4">
                         <label class="block mb-1">Instituție</label>
                         <select wire:model="id_institution" 
-                                class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-zinc-500">
                             <option value="">Selectează o instituție</option>
                             @foreach ($institutions as $institution)
                                 <option value="{{ $institution->id }}">{{ $institution->name }}</option>
@@ -170,11 +170,11 @@
     <label class="block mb-1">Eveniment</label>
     <div class="flex space-x-6">
         <label class="flex items-center">
-            <input type="radio" wire:model="eveniment_type" value="Depistare" class="form-radio text-blue-600 mr-2" checked>
+            <input type="radio" wire:model="eveniment_type" value="Depistare" class="form-radio text-zinc-600 mr-2" checked>
             Depistare
         </label>
         <label class="flex items-center">
-            <input type="radio" wire:model="eveniment_type" value="Contracarare" class="form-radio text-blue-600 mr-2">
+            <input type="radio" wire:model="eveniment_type" value="Contracarare" class="form-radio text-zinc-600 mr-2">
             Contracarare
         </label>
     </div>
@@ -196,14 +196,14 @@
                             @endif
                             <div class="flex items-center space-x-2">
                                 <button type="button" wire:click="openObjectListModal" 
-                                        class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded">+</button>
+                                        class="bg-blue-500 hover:bg-zinc-600 text-white px-2 py-1 rounded">+</button>
                             </div>
                         </div>
                     </div>
                     <div class="mb-4">
                         <label class="block mb-1">Detalii</label>
                         <textarea wire:model="obj_text" 
-                                  class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[200px]"></textarea>
+                                  class="w-full border border-gray-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-zinc-500 min-h-[200px]"></textarea>
                         @error('obj_text') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
                     <div class="flex justify-end">
@@ -222,7 +222,7 @@
     <!-- Modal pentru selecția obiectelor din object_list -->
     @if ($showObjectListModal)
         <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center" wire:ignore.self>
-            <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg w-1/3 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700">
+            <div class="bg-gray-100 dark:bg-zinc-900 p-6  w-1/3 text-gray-900 dark:text-white border border-gray-300 dark:border-zinc-700">
                 <h2 class="text-xl mb-4">Selectează obiecte</h2>
                 <div class="space-y-4">
                     @if ($objectLists && $objectLists->isNotEmpty())
@@ -230,7 +230,7 @@
                             <div class="flex items-center justify-between">
                                 <span>{{ $list->name ?? 'N/A' }}</span>
                                 <input type="number" wire:model.defer="tempQuantities.{{ $list->id }}" min="0" 
-                                       class="w-20 border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       class="w-20 border border-gray-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white p-1 rounded focus:outline-none focus:ring-2 focus:ring-zinc-500"
                                        placeholder="Cantitate">
                             </div>
                         @endforeach

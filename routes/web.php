@@ -9,6 +9,7 @@ use App\Livewire\EventManager;
 use App\Livewire\InjuryManager; 
 use App\Livewire\DetinutiManager;
 use App\Livewire\ObjectPrisonManager;
+use App\Http\Controllers\Controller;
 // use App\Livewire\ObjectListManager;
 use App\Livewire\DetinutiStatistics;
 

@@ -1,59 +1,66 @@
 <div>
-    <div class="border-b border-gray-200 dark:border-gray-700">
+    <div class="border-b border-gray-200 dark:border-zinc-700">
         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
             <li class="me-2">
                 <flux:button wire:click="setTab('users')" 
-                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'users' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }} rounded-t-lg group"
+                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'users' ? 'text-zinc-600 border-blue-600 dark:text-zinc-500 dark:border-zinc-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}  group"
                              icon="users"
-                             variant="ghost">
+                             style="border-radius: 0;"
+                 variant="ghost">
                     Utilizatori
                 </flux:button>
             </li>
             <li class="me-2">
                 <flux:button wire:click="setTab('roles')" 
-                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'roles' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }} rounded-t-lg group"
+                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'roles' ? 'text-zinc-600 border-blue-600 dark:text-zinc-500 dark:border-zinc-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}  group"
                              icon="shield-check"
-                             variant="ghost">
+                             style="border-radius: 0;"
+                 variant="ghost">
                     Roluri
                 </flux:button>
             </li>
             <li class="me-2">
                 <flux:button wire:click="setTab('permissions')" 
-                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'permissions' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }} rounded-t-lg group"
+                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'permissions' ? 'text-zinc-600 border-blue-600 dark:text-zinc-500 dark:border-zinc-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}  group"
                              icon="lock-closed"
-                             variant="ghost">
+                             style="border-radius: 0;"
+                 variant="ghost">
                     Permisiuni
                 </flux:button>
             </li>
             <li class="me-2">
                 <flux:button wire:click="setTab('institutions')" 
-                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'institutions' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }} rounded-t-lg group"
+                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'institutions' ? 'text-zinc-600 border-blue-600 dark:text-zinc-500 dark:border-zinc-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}  group"
                              icon="building-office"
-                             variant="ghost">
+                             style="border-radius: 0;"
+                 variant="ghost">
                     Instituții
                 </flux:button>
             </li>
             <li class="me-2">
                 <flux:button wire:click="setTab('event-categories')" 
-                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'event-categories' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }} rounded-t-lg group"
+                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'event-categories' ? 'text-zinc-600 border-blue-600 dark:text-zinc-500 dark:border-zinc-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}  group"
                              icon="tag"
-                             variant="ghost">
+                             style="border-radius: 0;"
+                 variant="ghost">
                     Categorii Evenimente
                 </flux:button>
             </li>
             <li class="me-2">
                 <flux:button wire:click="setTab('injury-categories')" 
-                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'injury-categories' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }} rounded-t-lg group"
+                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'injury-categories' ? 'text-zinc-600 border-blue-600 dark:text-zinc-500 dark:border-zinc-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}  group"
                              icon="heart"
-                             variant="ghost">
+                             style="border-radius: 0;"
+                 variant="ghost">
                     Categorii Leziuni
                 </flux:button>
             </li>
             <li class="me-2">
                 <flux:button wire:click="setTab('object-list')" 
-                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'object-list' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }} rounded-t-lg group"
+                             class="inline-flex items-center justify-center p-4 border-b-2 {{ $activeTab === 'object-list' ? 'text-zinc-600 border-blue-600 dark:text-zinc-500 dark:border-zinc-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}  group"
                              icon="cube"
-                             variant="ghost">
+                             style="border-radius: 0;"
+                 variant="ghost">
                     Lista Obiecte interzise
                 </flux:button>
             </li>

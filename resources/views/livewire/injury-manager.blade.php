@@ -4,33 +4,33 @@
     <div class="mb-4">
         @can('create injuries')
             <button wire:click="$set('showModal', true)" 
-                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                    class="bg-blue-500 hover:bg-zinc-600 text-white px-4 py-2 rounded">
                 Adaugă leziune
             </button>
         @endcan
     </div>
 
     <div class="flex justify-center">
-        <table class="w-[70%] bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700">
+        <table class="w-[70%] bg-gray-100 dark:bg-zinc-900 border border-gray-300 dark:border-zinc-700">
             <thead>
                 <tr>
-                    <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Data</th>
-                    <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Instituție</th>
-                    <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Categorie Leziuni</th>
-                    <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Persoane implicate</th>
-                    <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Detalii</th>
-                    <th class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">Acțiuni</th>
+                    <th class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">Data</th>
+                    <th class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">Instituție</th>
+                    <th class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">Categorie Leziuni</th>
+                    <th class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">Persoane implicate</th>
+                    <th class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">Detalii</th>
+                    <th class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">Acțiuni</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($injuries as $injury)
                     <tr>
-                        <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">{{ $injury->data ? $injury->data->format('d-m-Y') : '-' }}</td>
-                        <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">{{ $injury->institution->name ?? '-' }}</td>
-                        <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">{{ $injury->injuryCategory->name ?? '-' }}</td>
-                        <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">{{ $injury->persons_involved ?? '-' }}</td>
-                        <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white">{!! $injury->injuries_text ?? '-' !!}</td>
-                        <td class="py-2 px-4 border-b border-gray-300 dark:border-gray-700">
+                        <td class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">{{ $injury->data ? $injury->data->format('d-m-Y') : '-' }}</td>
+                        <td class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">{{ $injury->institution->name ?? '-' }}</td>
+                        <td class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">{{ $injury->injuryCategory->name ?? '-' }}</td>
+                        <td class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">{{ $injury->persons_involved ?? '-' }}</td>
+                        <td class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white">{!! $injury->injuries_text ?? '-' !!}</td>
+                        <td class="py-2 px-4 border-b border-gray-300 dark:border-zinc-700">
                             @can('edit injuries')
                                 <button wire:click="editInjury({{ $injury->id }})" 
                                         class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded">Editează</button>
@@ -52,19 +52,19 @@
 
     @if ($showModal)
         <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center" wire:ignore.self>
-            <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg w-1/2 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700">
+            <div class="bg-gray-100 dark:bg-zinc-900 p-6  w-1/2 text-gray-900 dark:text-white border border-gray-300 dark:border-zinc-700">
                 <h2 class="text-xl mb-4">{{ $editingInjuryId ? 'Editează leziune' : 'Crează leziune' }}</h2>
                 <form wire:submit.prevent="{{ $editingInjuryId ? 'updateInjury' : 'createInjury' }}">
                     <div class="mb-4">
                         <label class="block mb-1">Data</label>
                         <input type="date" id="data-input" wire:model="data" 
-                               class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                               class="w-full border border-gray-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-zinc-500">
                         @error('data') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-4">
                         <label class="block mb-1">Instituție</label>
                         <select wire:model="id_institution" 
-                                class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-zinc-500">
                             <option value="">Selectează o instituție</option>
                             @foreach ($institutions as $institution)
                                 <option value="{{ $institution->id }}">{{ $institution->name }}</option>
@@ -75,7 +75,7 @@
                     <div class="mb-4">
                         <label class="block mb-1">Categorie Leziuni</label>
                         <select wire:model="id_injuries_category" 
-                                class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                class="w-full border border-gray-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-zinc-500">
                             <option value="">Selectează o categorie</option>
                             @foreach ($injuryCategories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -86,16 +86,16 @@
                     <div class="mb-4">
                         <label class="block mb-1">Persoane implicate</label>
                         <input type="number" wire:model="persons_involved" min="0" 
-                               class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                               class="w-full border border-gray-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-zinc-500">
                         @error('persons_involved') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-4" wire:ignore>
                         <label class="block mb-1 text-gray-900 dark:text-white">Detalii</label>
-                        <div class="mb-2 p-3 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg shadow-md">
+                        <div class="mb-2 p-3 bg-gray-200 dark:bg-zinc-700 text-gray-900 dark:text-white  shadow-md">
                             <p class="text-sm font-semibold">Adaugă detalii</p>
                         </div>
                         <textarea id="tiny-editor" wire:model.debounce.500ms="injuries_text" 
-                                  class="w-full border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[200px]"></textarea>
+                                  class="w-full border border-gray-300 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-white p-2 rounded focus:outline-none focus:ring-2 focus:ring-zinc-500 min-h-[200px]"></textarea>
                         @error('injuries_text') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
                     <div class="flex justify-end">

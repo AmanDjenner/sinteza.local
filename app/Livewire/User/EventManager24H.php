@@ -69,6 +69,8 @@ class EventManager24H extends Component
             $this->lastLoadedDate = Carbon::today()->subDays(6)->format('Y-m-d');
             $this->events = collect();
             $this->loadInitialEvents();
+        } elseif ($tab === 'all-events') {
+            $this->loadAllEvents();
         }
     }
 
@@ -181,12 +183,22 @@ class EventManager24H extends Component
                 throw new \Exception('Utilizatorul nu are o instituție asociată. Contactați administratorul.');
             }
 
+            // Obținem numele instituției
+            $institution = Institution::findOrFail($this->id_institution);
+            $institutionName = $institution->name;
+
+            // Obținem ora curentă
+            $currentTime = Carbon::now()->format('H:i');
+
+            // Construim conținutul final pentru events_text
+            $formattedEventsText = "$institutionName, $currentTime, " . ($this->events_text ?? '');
+
             $eventData = [
                 'data' => $this->data,
                 'id_institution' => $this->id_institution,
                 'id_events_category' => $this->id_events_category,
                 'persons_involved' => $this->persons_involved,
-                'events_text' => $this->events_text,
+                'events_text' => $formattedEventsText,
             ];
 
             $event = Event::create($eventData);
@@ -198,7 +210,11 @@ class EventManager24H extends Component
 
             $createdAt = Carbon::parse($event->created_at)->format('d-m-Y H:i');
             $this->resetForm();
-            $this->loadEvents(); // Actualizăm doar ziua curentă
+            $this->lastLoadedDate = Carbon::today()->format('Y-m-d');
+            $this->loadEvents();
+            $this->loadAllEvents();
+            $this->dispatch('eventsUpdated');
+            $this->dispatch('allEventsUpdated', $this->allEvents->toArray());
             session()->flash('message', "Eveniment creat cu succes la data: {$createdAt}");
             Log::info('Eveniment creat cu succes:', ['id' => $event->id]);
         } catch (\Exception $e) {
@@ -260,8 +276,11 @@ class EventManager24H extends Component
             }
 
             $this->resetForm();
-            $this->loadInitialEvents(); // Reîncărcăm toate evenimentele pentru a reflecta modificările
+            $this->lastLoadedDate = Carbon::today()->format('Y-m-d');
+            $this->loadEvents();
             $this->loadAllEvents();
+            $this->dispatch('eventsUpdated');
+            $this->dispatch('allEventsUpdated', $this->allEvents->toArray());
             session()->flash('message', 'Eveniment actualizat cu succes!');
             Log::info('Eveniment actualizat cu succes:', ['id' => $event->id]);
         } catch (\Exception $e) {
@@ -274,8 +293,11 @@ class EventManager24H extends Component
     {
         try {
             Event::findOrFail($id)->delete();
-            $this->loadInitialEvents(); // Reîncărcăm pentru a reflecta ștergerea
+            $this->lastLoadedDate = Carbon::today()->format('Y-m-d');
+            $this->loadEvents();
             $this->loadAllEvents();
+            $this->dispatch('eventsUpdated');
+            $this->dispatch('allEventsUpdated', $this->allEvents->toArray());
             session()->flash('message', 'Eveniment șters cu succes!');
         } catch (\Exception $e) {
             Log::error('Eroare la ștergerea evenimentului: ' . $e->getMessage());

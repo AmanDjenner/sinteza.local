@@ -3,63 +3,73 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\Event;
 use App\Models\Institution;
-use App\Models\EventCategory;
-use App\Models\EventSubcategory;
+use Carbon\Carbon;
 
 class EventManager extends Component
 {
-    public $events = [];
+    use WithPagination;
+
     public $institutions;
-    public $categories;
-    public $subcategories = [];
     public $showModal = false;
     public $editingEventId = null;
     public $data;
     public $id_institution;
-    public $id_events_category; // Schimbat din id_category
-    public $id_subcategory = []; // Corect ca array
     public $persons_involved;
     public $events_text;
+    public $perPage = 20;
+    public $sortField = 'created_at'; // Сортировка по дате создания
+    public $sortDirection = 'desc';   // Последние первыми
+    public $startDate;
+    public $endDate;
+    public $search = ''; // Поле для живого поиска
 
     protected $rules = [
-        'data' => 'nullable|date',
+        'data' => 'nullable|date_format:Y-m-d',
         'id_institution' => 'required|exists:institutions,id',
-        'id_events_category' => 'required|exists:events_category,id', // Schimbat din id_category
-        'id_subcategory' => 'nullable|array',
-        'id_subcategory.*' => 'exists:events_subcategory,id',
         'persons_involved' => 'nullable|integer|min:0',
         'events_text' => 'nullable|string',
+        'startDate' => 'nullable|date_format:Y-m-d',
+        'endDate' => 'nullable|date_format:Y-m-d|after_or_equal:startDate',
     ];
 
     public function mount()
     {
         $this->institutions = Institution::all();
-        $this->categories = EventCategory::all();
-        $this->loadEvents();
     }
 
-    public function loadEvents()
+    public function updatingPerPage($value)
     {
-        try {
-            $this->events = Event::with(['institution', 'category', 'subcategories'])->get();
-        } catch (\Exception $e) {
-            $this->events = [];
-            \Log::error('Eroare la încărcarea evenimentelor: ' . $e->getMessage());
-            session()->flash('error', 'Eroare la încărcarea evenimentelor: ' . $e->getMessage());
-        }
+        $this->perPage = $value;
+        $this->resetPage();
     }
 
-    public function updateSubcategories()
+    public function updatingSearch()
     {
-        if ($this->id_events_category) { // Schimbat din id_category
-            $this->subcategories = EventSubcategory::where('id_events_category', $this->id_events_category)->get(); // Schimbat din id_category
-            $this->id_subcategory = []; // Resetează selecția subcategoriilor
+        $this->resetPage(); // Сбрасываем страницу при каждом изменении поиска
+    }
+
+    public function updatingStartDate()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingEndDate()
+    {
+        $this->resetPage();
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
-            $this->subcategories = [];
-            $this->id_subcategory = [];
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
         }
+        $this->resetPage();
     }
 
     public function createEvent()
@@ -70,17 +80,11 @@ class EventManager extends Component
             $event = Event::create([
                 'data' => $this->data,
                 'id_institution' => $this->id_institution,
-                'id_events_category' => $this->id_events_category, // Schimbat din id_category
                 'persons_involved' => $this->persons_involved,
                 'events_text' => $this->events_text,
             ]);
 
-            if (!empty($this->id_subcategory)) {
-                $event->subcategories()->sync($this->id_subcategory);
-            }
-
             $this->resetForm();
-            $this->loadEvents();
             session()->flash('message', 'Eveniment creat cu succes!');
         } catch (\Exception $e) {
             \Log::error('Eroare la crearea evenimentului: ' . $e->getMessage());
@@ -95,11 +99,8 @@ class EventManager extends Component
             $this->editingEventId = $id;
             $this->data = $event->data ? $event->data->format('Y-m-d') : null;
             $this->id_institution = $event->id_institution;
-            $this->id_events_category = $event->id_events_category; // Schimbat din id_category
-            $this->id_subcategory = $event->subcategories->pluck('id')->toArray();
             $this->persons_involved = $event->persons_involved;
             $this->events_text = $event->events_text;
-            $this->updateSubcategories();
             $this->showModal = true;
 
             $this->emit('editEvent', ['data' => $event->toArray()]);
@@ -118,19 +119,11 @@ class EventManager extends Component
             $event->update([
                 'data' => $this->data,
                 'id_institution' => $this->id_institution,
-                'id_events_category' => $this->id_events_category, // Schimbat din id_category
                 'persons_involved' => $this->persons_involved,
                 'events_text' => $this->events_text,
             ]);
 
-            if (!empty($this->id_subcategory)) {
-                $event->subcategories()->sync($this->id_subcategory);
-            } else {
-                $event->subcategories()->detach();
-            }
-
             $this->resetForm();
-            $this->loadEvents();
             session()->flash('message', 'Eveniment actualizat cu succes!');
         } catch (\Exception $e) {
             \Log::error('Eroare la actualizarea evenimentului: ' . $e->getMessage());
@@ -142,7 +135,6 @@ class EventManager extends Component
     {
         try {
             Event::findOrFail($id)->delete();
-            $this->loadEvents();
             session()->flash('message', 'Eveniment șters cu succes!');
         } catch (\Exception $e) {
             \Log::error('Eroare la ștergerea evenimentului: ' . $e->getMessage());
@@ -156,16 +148,35 @@ class EventManager extends Component
         $this->editingEventId = null;
         $this->data = null;
         $this->id_institution = null;
-        $this->id_events_category = null; // Schimbat din id_category
-        $this->id_subcategory = [];
         $this->persons_involved = null;
         $this->events_text = null;
-        $this->subcategories = [];
         $this->resetErrorBag();
     }
 
     public function render()
     {
-        return view('livewire.event-manager');
+        $query = Event::with(['institution'])
+            ->orderBy($this->sortField, $this->sortDirection);
+
+        if ($this->startDate) {
+            $query->where('data', '>=', $this->startDate);
+        }
+        if ($this->endDate) {
+            $query->where('data', '<=', $this->endDate);
+        }
+
+        if ($this->search) {
+            $query->where(function ($q) {
+                $q->where('events_text', 'like', '%' . $this->search . '%') // Живой поиск в Detalii
+                  ->orWhere('data', 'like', '%' . $this->search . '%'); // Поиск по дате как бонус
+            });
+        }
+
+        $events = $query->paginate($this->perPage);
+
+        return view('livewire.event-manager', [
+            'events' => $events,
+            'institutions' => $this->institutions,
+        ]);
     }
 }
